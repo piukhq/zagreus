@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django = "*"
+python-dotenv = "*"
+djangorestframework = "*"
+psycopg2 = "*"
+celery = {extras = ["django"],version = "*"}
+django-admin-rangefilter = "*"
+django-advanced-filters = "*"
+
+[requires]
+python_version = "3.7"
