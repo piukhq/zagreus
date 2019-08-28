@@ -12,6 +12,3 @@ djangorestframework = "*"
 psycopg2 = "*"
 celery = {extras = ["django"],version = "*"}
 django-advanced-filters = "*"
-
-[requires]
-python_version = "3.7"
