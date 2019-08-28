@@ -10,18 +10,6 @@ complexity:
   script:
     - xenon --max-average A --max-modules B --max-absolute B .
 
-tests:
-  stage: tests
-  image: olympus.azurecr.io/python:3.7
-  script:
-    - pipenv install --dev
-    - export ZAGREUS_DATABASE_USER=postgres
-    - export ZAGREUS_DATABASE_NAME=postgres
-    - export ZAGREUS_DATABASE_HOST=$POSTGRES_PORT_5432_TCP_ADDR
-    - pipenv run pytest -v --cov-report term-missing --cov=.
-  services:
-    - postgres:latest
-
 style:
   stage: tests
   image: olympus.azurecr.io/python:3.7
