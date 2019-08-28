@@ -97,6 +97,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'zagreus.wsgi.application'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = env_var('STATIC_URL', '/static/')
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -145,8 +148,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
 
 CELERY_BROKER_URL = env_var('CELERY_BROKER_URL', 'pyamqp://guest@localhost//')
 CELERY_TASK_DEFAULT_QUEUE = env_var('CELERY_TASK_DEFAULT_QUEUE', 'auth-transactions')
