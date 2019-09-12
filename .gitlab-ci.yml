@@ -72,6 +72,7 @@ tag-staging:
 
 statics-staging:
   stage: statics
+  needs: ["tag-staging"]
   image: binkops.azurecr.io/kubedeployer:latest
   environment: staging
   script:
@@ -92,6 +93,7 @@ tag-prod:
 
 statics-prod:
   stage: statics
+  needs: ["tag-prod"]
   image: binkops.azurecr.io/kubedeployer:latest
   environment: prod
   script:
