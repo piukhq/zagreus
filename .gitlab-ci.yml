@@ -1,8 +1,9 @@
 stages:
   - tests
   - build
-  - tagging
-  - statics
+  - dev
+  - staging
+  - production
 
 complexity:
   stage: tests
@@ -30,7 +31,7 @@ build-develop:
     - develop
 
 tag-develop:
-  stage: tagging
+  stage: dev
   image: binkops.azurecr.io/tagbot:latest
   environment: dev
   script:
@@ -39,7 +40,7 @@ tag-develop:
     - develop
 
 statics-dev:
-  stage: statics
+  stage: dev
   image: binkops.azurecr.io/kubedeployer:latest
   environment: dev
   script:
@@ -62,7 +63,7 @@ build-master:
     - tags
 
 tag-staging:
-  stage: tagging
+  stage: staging
   image: binkops.azurecr.io/tagbot:latest
   environment: staging
   script:
@@ -71,8 +72,7 @@ tag-staging:
     - tags
 
 statics-staging:
-  stage: statics
-  needs: ["tag-staging"]
+  stage: staging
   image: binkops.azurecr.io/kubedeployer:latest
   environment: staging
   script:
@@ -82,7 +82,7 @@ statics-staging:
     - tags
 
 tag-prod:
-  stage: tagging
+  stage: production
   image: binkops.azurecr.io/tagbot:latest
   environment: prod
   script:
@@ -92,12 +92,12 @@ tag-prod:
     - tags
 
 statics-prod:
-  stage: statics
-  needs: ["tag-prod"]
+  stage: production
   image: binkops.azurecr.io/kubedeployer:latest
   environment: prod
   script:
     - bash collectstatic.sh
     - ENVIRONMENT=prod deploystatic
+  when: manual
   only:
     - tags
