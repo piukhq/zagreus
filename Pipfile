@@ -4,14 +4,11 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+black = "==19.3b0"
+flake8 = "*"
 
 [packages]
 django = "*"
-python-dotenv = "*"
-djangorestframework = "*"
 psycopg2 = "*"
-celery = {extras = ["django"],version = "*"}
-django-advanced-filters = "*"
-
-[requires]
-python_version = "3.7"
+kombu = "*"
+pygments = "*"
