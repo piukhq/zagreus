@@ -101,7 +101,6 @@ DATABASES = {
         "PASSWORD": env_var("ZAGREUS_DATABASE_PASS"),
         "HOST": env_var("ZAGREUS_DATABASE_HOST", "localhost"),
         "PORT": env_var("ZAGREUS_DATABASE_PORT", "5432", is_int=True),
-        "CONN_MAX_AGE": None,  # unlimited persistent connections
     }
 }
 
