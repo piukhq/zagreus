@@ -1,14 +1,11 @@
-FROM python:3.7-alpine
+FROM binkhq/python:3.8
 
 WORKDIR /app
 ADD . .
 
-ENV PIP_NO_BINARY=psycopg2
+RUN pip install --no-cache-dir pipenv==2020.8.13 gunicorn && \
+    pipenv install --system --deploy --ignore-pipfile
 
-RUN apk add --no-cache --virtual build \
-      build-base && \
-    apk add --no-cache \
-      postgresql-dev libc-dev binutils && \
-    pip install gunicorn pipenv && \
-    pipenv install --system --deploy --ignore-pipfile && \
-    apk del --no-cache build
+CMD [ "gunicorn", "--workers=2", "--threads=2", "--error-logfile=-", \
+                  "--access-logfile=-", "--bind=0.0.0.0:9000", "zagreus.wsgi" ]
+
