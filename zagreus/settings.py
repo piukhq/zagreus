@@ -38,15 +38,7 @@ SECRET_KEY = "@!tir6c)c-@@xl%qmlzeevl^1hw49*u6up!xr$bcjew2o89wpz"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env_var("ZAGREUS_DEBUG", False)
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "zagreus",
-    ".bink.com",
-    ".bink-staging.com",
-    ".bink-dev.com",
-    ".bink-sandbox.com",
-]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
