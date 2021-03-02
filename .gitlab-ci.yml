@@ -17,36 +17,20 @@ style:
   script:
     - flake8
 
-build-develop:
-  stage: build
+dev:
+  stage: dev
   image: docker:latest
   services:
     - docker:dind
+  environment:
+    name: dev
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
   script:
-    - docker build --pull -t "$CI_REGISTRY/zagreus:latest" .
-    - docker run --rm -v /var/run/docker.sock:/var/run/docker.sock "$CI_REGISTRY/aqua-scanner:5.0" scan --local "$CI_REGISTRY/zagreus:latest" --host https://aqua.uksouth.bink.sh:30001/ --user scanner --password $AQUA_PASSWORD --show-negligible --policies Bink --text
-    - docker push "$CI_REGISTRY/zagreus:latest"
-  only:
-    - develop
-
-tag-develop:
-  stage: dev
-  image: binkops.azurecr.io/tagbot:latest
-  environment: dev
-  script:
-    - tagbot --username "$CI_REGISTRY_USER" --password "$CI_REGISTRY_PASSWORD" --source "$CI_REGISTRY/zagreus:latest" --tag "develop-$CI_COMMIT_SHORT_SHA"
-  only:
-    - develop
-
-statics-dev:
-  stage: dev
-  image: binkops.azurecr.io/kubedeployer:latest
-  environment: dev
-  script:
-    - bash collectstatic.sh
-    - ENVIRONMENT=dev deploystatic
+    - export CTAG="develop-$(date +%F-%H%M%S)"
+    - docker build --pull -t "$CI_REGISTRY/zagreus:$CTAG" .
+    - docker run --rm -v /var/run/docker.sock:/var/run/docker.sock "$CI_REGISTRY/aqua-scanner:5.0" scan --local "$CI_REGISTRY/zagreus:$CTAG" --host https://aqua.uksouth.bink.sh:30001/ --user scanner --password $AQUA_PASSWORD --show-negligible --policies Bink --text
+    - docker push "$CI_REGISTRY/zagreus:$CTAG"
   only:
     - develop
 
@@ -67,39 +51,20 @@ build-master:
 tag-staging:
   stage: staging
   image: binkops.azurecr.io/tagbot:latest
-  environment: staging
+  environment:
+    name: staging
   script:
     - tagbot --username "$CI_REGISTRY_USER" --password "$CI_REGISTRY_PASSWORD" --source "$CI_REGISTRY/zagreus:$CI_COMMIT_TAG" --tag "staging-$CI_COMMIT_TAG"
-  only:
-    - tags
-
-statics-staging:
-  stage: staging
-  image: binkops.azurecr.io/kubedeployer:latest
-  environment: staging
-  script:
-    - bash collectstatic.sh
-    - ENVIRONMENT=staging deploystatic
   only:
     - tags
 
 tag-prod:
   stage: production
   image: binkops.azurecr.io/tagbot:latest
-  environment: prod
+  environment:
+    name: prod
   script:
     - tagbot --username "$CI_REGISTRY_USER" --password "$CI_REGISTRY_PASSWORD" --source "$CI_REGISTRY/zagreus:$CI_COMMIT_TAG" --tag "prod-$CI_COMMIT_TAG"
-  when: manual
-  only:
-    - tags
-
-statics-prod:
-  stage: production
-  image: binkops.azurecr.io/kubedeployer:latest
-  environment: prod
-  script:
-    - bash collectstatic.sh
-    - ENVIRONMENT=prod deploystatic
   when: manual
   only:
     - tags
