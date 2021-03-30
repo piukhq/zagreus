@@ -140,4 +140,4 @@ AMQP_USER = env_var("AMQP_USER", "guest")
 AMQP_PASSWORD = env_var("AMQP_PASSWORD", "guest")
 AMQP_HOST = env_var("AMQP_HOST", "localhost")
 AMQP_PORT = env_var("AMQP_PORT", "5672")
-AMQP_DSN = f"amqp://{AMQP_USER}:{AMQP_PASSWORD}@{AMQP_HOST}:{AMQP_PORT}//"
+AMQP_DSN = env_var("AMQP_DSN", f"amqp://{AMQP_USER}:{AMQP_PASSWORD}@{AMQP_HOST}:{AMQP_PORT}//")
