@@ -8,7 +8,7 @@ import kombu.mixins
 from app import models
 
 # All queues if required QUEUE_NAMES = ["amex-auth", "mastercard-auth", "visa-auth", "visa-settlement"]
-QUEUE_NAMES = ["visa-auth", "visa-settlement"]
+QUEUE_NAMES = ["amex-settlement"]
 
 
 log = logging.getLogger(__name__)
