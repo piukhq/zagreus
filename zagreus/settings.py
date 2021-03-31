@@ -135,7 +135,7 @@ LOGGING = {
 }
 
 # AMQP connection details
-AMQP_QUEUE = env_var("AMQP_QUEUE", "auth-transactions")
+AMQP_QUEUE = env_var("AMQP_QUEUE", "amex-settlement")
 AMQP_USER = env_var("AMQP_USER", "guest")
 AMQP_PASSWORD = env_var("AMQP_PASSWORD", "guest")
 AMQP_HOST = env_var("AMQP_HOST", "localhost")
