@@ -38,15 +38,7 @@ SECRET_KEY = "@!tir6c)c-@@xl%qmlzeevl^1hw49*u6up!xr$bcjew2o89wpz"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env_var("ZAGREUS_DEBUG", False)
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "zagreus",
-    ".bink.com",
-    ".bink-staging.com",
-    ".bink-dev.com",
-    ".bink-sandbox.com",
-]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -143,9 +135,9 @@ LOGGING = {
 }
 
 # AMQP connection details
-AMQP_QUEUE = env_var("AMQP_QUEUE", "auth-transactions")
+AMQP_QUEUE = env_var("AMQP_QUEUE", "amex-settlement")
 AMQP_USER = env_var("AMQP_USER", "guest")
 AMQP_PASSWORD = env_var("AMQP_PASSWORD", "guest")
 AMQP_HOST = env_var("AMQP_HOST", "localhost")
 AMQP_PORT = env_var("AMQP_PORT", "5672")
-AMQP_DSN = f"amqp://{AMQP_USER}:{AMQP_PASSWORD}@{AMQP_HOST}:{AMQP_PORT}//"
+AMQP_DSN = env_var("AMQP_DSN", f"amqp://{AMQP_USER}:{AMQP_PASSWORD}@{AMQP_HOST}:{AMQP_PORT}//")
