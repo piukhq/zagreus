@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from typing import Union
 
+import dj_database_url
+
 
 def env_var(name: str, default: Union[str, int, bool] = None, is_int: bool = False) -> Union[str, int, bool]:
     value = os.getenv(name, default)
@@ -85,16 +87,25 @@ WSGI_APPLICATION = "zagreus.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env_var("ZAGREUS_DATABASE_NAME", "postgres"),
-        "USER": env_var("ZAGREUS_DATABASE_USER", "postgres"),
-        "PASSWORD": env_var("ZAGREUS_DATABASE_PASS"),
-        "HOST": env_var("ZAGREUS_DATABASE_HOST", "localhost"),
-        "PORT": env_var("ZAGREUS_DATABASE_PORT", "5432", is_int=True),
+if env_var("ZAGREUS_DATABASE_URI"):
+    DATABASES = {
+        "default": dj_database_url.config(
+            env="ZAGREUS_DATABASE_URI",
+            conn_max_age=600,
+            engine="django.db.backends.postgresql_psycopg2",
+        )
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": env_var("ZAGREUS_DATABASE_NAME", "postgres"),
+            "USER": env_var("ZAGREUS_DATABASE_USER", "postgres"),
+            "PASSWORD": env_var("ZAGREUS_DATABASE_PASS"),
+            "HOST": env_var("ZAGREUS_DATABASE_HOST", "localhost"),
+            "PORT": env_var("ZAGREUS_DATABASE_PORT", "5432", is_int=True),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
