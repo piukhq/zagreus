@@ -4,12 +4,21 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-black = "==21.4b1"
+black = "==21.8b0"
 flake8 = "*"
 isort = "*"
+mypy = "*"
+pytest = "*"
+ptpython = "*"
+xenon = "*"
 
 [packages]
 django = "<3.0"
 psycopg2-binary = "*"
 kombu = "*"
 pygments = "*"
+gunicorn = "*"
+dj-database-url = "*"
+
+[requires]
+python_version = "3.9"
