@@ -1,10 +1,10 @@
 import json
 
+import pygments
+import pygments.formatters
+import pygments.lexers
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-import pygments
-import pygments.lexers
-import pygments.formatters
 
 from app.models import Transaction
 
